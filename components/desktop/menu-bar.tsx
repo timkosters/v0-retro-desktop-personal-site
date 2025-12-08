@@ -22,8 +22,7 @@ const MENU_CONFIG = {
     { name: "Night City", url: "https://images.unsplash.com/photo-1514565131-fce0801e5785?w=1920&q=80" },
   ],
 
-  // GitHub repo link (set to null to hide)
-  githubUrl: "https://github.com/timourxyz",
+  githubUrl: "https://github.com/timkosters/v0-retro-desktop-personal-site",
 
   // Contact email
   email: "hello@timour.dev",
@@ -154,14 +153,6 @@ export function MenuBar({ onWallpaperChange, currentWallpaper }: MenuBarProps) {
                   View Source
                 </DropdownMenuItem>
               )}
-
-              {/* Email */}
-              <DropdownMenuItem
-                onClick={() => (window.location.href = `mailto:${MENU_CONFIG.email}`)}
-                className="text-sm text-black hover:bg-black hover:text-white rounded-none cursor-pointer"
-              >
-                Contact
-              </DropdownMenuItem>
 
               <DropdownMenuSeparator className="bg-black h-px my-1" />
 
