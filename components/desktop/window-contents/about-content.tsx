@@ -5,8 +5,7 @@
 // ============================================
 
 const ABOUT_CONFIG = {
-  // Your profile image (use a grayscale or any image URL)
-  profileImage: "/grayscale-city-skyline-between-buildings.jpg",
+  profileImage: "/images/young-timour.png",
 
   // Main greeting
   greeting: "HELLO, TRAVELER.",

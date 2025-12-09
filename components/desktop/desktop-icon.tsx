@@ -186,19 +186,50 @@ export function DesktopIcon({
       case "edgecity":
         return (
           <div className="w-14 h-12 relative">
-            {/* Cloud/floating base */}
-            <div className="absolute bottom-0 left-0 right-0 h-4 bg-gradient-to-t from-white/80 to-white/20 rounded-full blur-[2px]" />
-            {/* City buildings */}
-            <div className="absolute bottom-2 left-2 w-2 h-6 bg-[#6a8caf] border border-[#4a6c8f]" />
-            <div className="absolute bottom-2 left-4 w-3 h-8 bg-[#8aa4c4] border border-[#6a84a4]" />
-            <div className="absolute bottom-2 left-7 w-2 h-5 bg-[#7a94b4] border border-[#5a74a4]" />
-            <div className="absolute bottom-2 right-2 w-2 h-7 bg-[#6a8caf] border border-[#4a6c8f]" />
-            {/* Windows on buildings */}
-            <div className="absolute bottom-4 left-[10px] w-1 h-1 bg-[#fffacd]" />
-            <div className="absolute bottom-6 left-[10px] w-1 h-1 bg-[#fffacd]" />
-            <div className="absolute bottom-4 left-[18px] w-1 h-1 bg-[#fffacd]" />
-            <div className="absolute bottom-6 left-[18px] w-1 h-1 bg-[#fffacd]" />
-            <div className="absolute bottom-8 left-[18px] w-1 h-1 bg-[#fffacd]" />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#87CEEB] to-[#5a9abf] border-2 border-[#2a2a2a] rounded-md overflow-hidden">
+              {/* Sun/moon */}
+              <div className="absolute top-1 right-2 w-2 h-2 bg-[#ffe4a0] rounded-full" />
+              {/* City buildings */}
+              <div className="absolute bottom-0 left-0 right-0 flex items-end justify-center gap-[1px] px-[2px]">
+                {/* Building 1 - short */}
+                <div className="w-[5px] h-4 bg-[#2a3a4a] relative">
+                  <div className="absolute top-1 left-[1px] w-[1px] h-[1px] bg-[#ffe066]" />
+                  <div className="absolute top-2 left-[2px] w-[1px] h-[1px] bg-[#ffe066]" />
+                </div>
+                {/* Building 2 - tall with spire */}
+                <div className="w-[6px] h-7 bg-[#3a4a5a] relative">
+                  <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-[2px] h-2 bg-[#4a5a6a]" />
+                  <div className="absolute top-1 left-[1px] w-[1px] h-[1px] bg-[#ffe066]" />
+                  <div className="absolute top-2 left-[3px] w-[1px] h-[1px] bg-[#ffe066]" />
+                  <div className="absolute top-3 left-[1px] w-[1px] h-[1px] bg-[#ffe066]" />
+                </div>
+                {/* Building 3 - medium */}
+                <div className="w-[7px] h-5 bg-[#2a3a4a] relative">
+                  <div className="absolute top-1 left-[1px] w-[1px] h-[1px] bg-[#ffe066]" />
+                  <div className="absolute top-1 left-[4px] w-[1px] h-[1px] bg-[#ffe066]" />
+                  <div className="absolute top-2 left-[2px] w-[1px] h-[1px] bg-[#ffe066]" />
+                </div>
+                {/* Building 4 - tallest */}
+                <div className="w-[5px] h-8 bg-[#4a5a6a] relative">
+                  <div className="absolute top-1 left-[1px] w-[1px] h-[1px] bg-[#ffe066]" />
+                  <div className="absolute top-2 left-[2px] w-[1px] h-[1px] bg-[#ffe066]" />
+                  <div className="absolute top-4 left-[1px] w-[1px] h-[1px] bg-[#ffe066]" />
+                  <div className="absolute top-5 left-[2px] w-[1px] h-[1px] bg-[#ffe066]" />
+                </div>
+                {/* Building 5 - medium with roof */}
+                <div className="w-[6px] h-5 bg-[#3a4a5a] relative">
+                  <div
+                    className="absolute -top-1 left-0 right-0 h-1 bg-[#4a5a6a]"
+                    style={{ clipPath: "polygon(50% 0%, 100% 100%, 0% 100%)" }}
+                  />
+                  <div className="absolute top-1 left-[2px] w-[1px] h-[1px] bg-[#ffe066]" />
+                </div>
+                {/* Building 6 - short */}
+                <div className="w-[4px] h-3 bg-[#2a3a4a] relative">
+                  <div className="absolute top-1 left-[1px] w-[1px] h-[1px] bg-[#ffe066]" />
+                </div>
+              </div>
+            </div>
           </div>
         )
       default:

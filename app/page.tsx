@@ -5,7 +5,7 @@ import { AnimatePresence } from "framer-motion"
 import { DesktopIcon } from "@/components/desktop/desktop-icon"
 import { Window } from "@/components/desktop/window"
 import { Dock } from "@/components/desktop/dock"
-import { MenuBar } from "@/components/desktop/menu-bar"
+import { MenuBar, WALLPAPERS } from "@/components/desktop/menu-bar"
 import { AboutContent } from "@/components/desktop/window-contents/about-content"
 import { MusicContent } from "@/components/desktop/window-contents/music-content"
 import { ContactContent } from "@/components/desktop/window-contents/contact-content"
@@ -72,24 +72,25 @@ const getWindowConfigs = (
   },
   writing: {
     title: "Writing",
-    defaultPosition: { x: isMobile ? 10 : 80, y: 60 },
+    defaultPosition: { x: isMobile ? 10 : 80, y: isMobile ? 50 : 60 },
     size: { width: isMobile ? 300 : 520, height: isMobile ? 420 : 480 },
   },
   soundcloud: {
     title: "Soundcloud",
-    defaultPosition: { x: isMobile ? 10 : 100, y: 50 },
+    defaultPosition: { x: isMobile ? 10 : 100, y: isMobile ? 50 : 50 },
     size: { width: isMobile ? 280 : 380, height: isMobile ? 400 : 450 },
   },
   edgecity: {
     title: "Edge City",
-    defaultPosition: { x: isMobile ? 10 : 120, y: 100 },
+    defaultPosition: { x: isMobile ? 10 : 120, y: isMobile ? 100 : 100 },
     size: { width: isMobile ? 280 : 340, height: isMobile ? 260 : 280 },
   },
 })
 
 export default function Desktop() {
   const [isMobile, setIsMobile] = useState(false)
-  const [wallpaper, setWallpaper] = useState("https://i.imgur.com/VsXVEBT.jpeg")
+  const [wallpaper, setWallpaper] = useState(WALLPAPERS[0].url)
+  const [wallpaperType, setWallpaperType] = useState<"image" | "video">(WALLPAPERS[0].type || "image")
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 640)
@@ -155,28 +156,46 @@ export default function Desktop() {
     }
   }
 
-  return (
-    <div
-      className="h-screen w-screen overflow-hidden relative"
-      style={{
-        backgroundImage: `url('${wallpaper}')`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    >
-      <MenuBar onWallpaperChange={setWallpaper} currentWallpaper={wallpaper} />
+  const handleWallpaperChange = (url: string, type: "image" | "video") => {
+    setWallpaper(url)
+    setWallpaperType(type)
+  }
 
-      <div className="absolute top-12 left-6 pb-28 grid grid-cols-3 sm:grid-cols-1 sm:flex sm:flex-col gap-3">
-        {desktopIcons.map((icon) => (
-          <DesktopIcon
-            key={icon.id}
-            icon={null}
-            iconType={icon.iconType}
-            label={icon.label}
-            onClick={() => handleIconClick(icon)}
-            isExternal={"externalUrl" in icon && !!icon.externalUrl}
-          />
-        ))}
+  return (
+    <div className="h-screen w-screen overflow-hidden relative">
+      {wallpaperType === "video" ? (
+        <video
+          key={wallpaper}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover -z-10"
+        >
+          <source src={wallpaper} type="video/mp4" />
+        </video>
+      ) : (
+        <div
+          className="absolute inset-0 -z-10"
+          style={{ backgroundImage: `url('${wallpaper}')`, backgroundSize: "cover", backgroundPosition: "center" }}
+        />
+      )}
+
+      <MenuBar onWallpaperChange={handleWallpaperChange} currentWallpaper={wallpaper} />
+
+      <div className="absolute top-12 left-6 right-6 lg:right-auto bottom-24 overflow-y-auto">
+        <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-1 lg:flex lg:flex-col gap-3 pb-4">
+          {desktopIcons.map((icon) => (
+            <DesktopIcon
+              key={icon.id}
+              icon={null}
+              iconType={icon.iconType}
+              label={icon.label}
+              onClick={() => handleIconClick(icon)}
+              isExternal={"externalUrl" in icon && !!icon.externalUrl}
+            />
+          ))}
+        </div>
       </div>
 
       <AnimatePresence>
@@ -197,7 +216,7 @@ export default function Desktop() {
         ))}
       </AnimatePresence>
 
-      <Dock onOpenWindow={(id) => openWindow(id as WindowId)} />
+      <Dock onWallpaperChange={handleWallpaperChange} currentWallpaper={wallpaper} />
     </div>
   )
 }

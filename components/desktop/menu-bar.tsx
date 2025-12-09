@@ -17,9 +17,32 @@ import {
 const MENU_CONFIG = {
   // Available wallpapers (add more URLs here)
   wallpapers: [
-    { name: "Sunset Coast", url: "https://i.imgur.com/VsXVEBT.jpeg" },
-    { name: "Blue Clouds", url: "/images/screenshot-202025-12-05-20at-2010.png" },
-    { name: "Night City", url: "https://images.unsplash.com/photo-1514565131-fce0801e5785?w=1920&q=80" },
+    {
+      name: "Dreamy Clouds",
+      url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/timour_Clouds_slowly_move_in_the_background_while_the_window__7439470e-faa9-498a-976a-483ae1c790e6_2-qfwXUT4tYaxGtpBLFM3qcfO9Yh8uT3.mp4",
+      type: "video" as const,
+    },
+    { name: "Sunset Coast", url: "https://i.imgur.com/VsXVEBT.jpeg", type: "image" as const },
+    {
+      name: "Flower Glitch",
+      url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Flower%20Glitch%20shortened%20and%20compressed-5bLmCGOkaMIDova4kEwIAYuUEQXzZD.mp4",
+      type: "video" as const,
+    },
+    {
+      name: "Blueprint Satellite",
+      url: "/images/satellite-20no-20bottom-20blueprint-20paper-20light-20grain.jpg",
+      type: "image" as const,
+    },
+    {
+      name: "Floating Layers",
+      url: "/images/timour-create-a-diagram-of-the-pace-layers-but-instead-of-the-121ab87e-f431-4d70-b107-52fa6f1e2fd0-0.png",
+      type: "image" as const,
+    },
+    {
+      name: "Mountain Blueprint",
+      url: "/images/timour-httpss.png",
+      type: "image" as const,
+    },
   ],
 
   githubUrl: "https://github.com/timkosters/v0-retro-desktop-personal-site",
@@ -27,6 +50,8 @@ const MENU_CONFIG = {
   // Contact email
   email: "hello@timour.dev",
 }
+
+export const WALLPAPERS = MENU_CONFIG.wallpapers
 
 interface AppleParticle {
   id: number
@@ -39,7 +64,7 @@ interface AppleParticle {
 }
 
 interface MenuBarProps {
-  onWallpaperChange?: (url: string) => void
+  onWallpaperChange?: (url: string, type: "image" | "video") => void
   currentWallpaper?: string
 }
 
@@ -186,7 +211,7 @@ export function MenuBar({ onWallpaperChange, currentWallpaper }: MenuBarProps) {
               {MENU_CONFIG.wallpapers.map((wp) => (
                 <DropdownMenuItem
                   key={wp.url}
-                  onClick={() => onWallpaperChange?.(wp.url)}
+                  onClick={() => onWallpaperChange?.(wp.url, wp.type || "image")}
                   className={`text-sm text-black hover:bg-black hover:text-white rounded-none cursor-pointer pl-6 ${currentWallpaper === wp.url ? "bg-[#d0d0d0]" : ""}`}
                 >
                   {currentWallpaper === wp.url && "✓ "}
