@@ -98,12 +98,30 @@ export default function Desktop() {
   const [isMobile, setIsMobile] = useState(false)
   const [wallpaper, setWallpaper] = useState(WALLPAPERS[0].url)
   const [wallpaperType, setWallpaperType] = useState<"image" | "video">(WALLPAPERS[0].type || "image")
+  const [maxIconsPerColumn, setMaxIconsPerColumn] = useState(5)
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 640)
     checkMobile()
     window.addEventListener("resize", checkMobile)
     return () => window.removeEventListener("resize", checkMobile)
+  }, [])
+
+  useEffect(() => {
+    const calculateMaxIcons = () => {
+      const viewportHeight = window.innerHeight
+      const menuBarHeight = 48 // top-12
+      const dockHeight = 96 // bottom-24
+      const availableHeight = viewportHeight - menuBarHeight - dockHeight
+      const iconHeight = 100 // approximate height of icon + gap
+      const maxIcons = Math.floor(availableHeight / iconHeight)
+      const totalIcons = desktopIcons.length // 7 icons
+      const desiredMax = Math.min(maxIcons, totalIcons - 2) // Leave at least 2 for second column
+      setMaxIconsPerColumn(Math.max(3, desiredMax)) // Minimum 3 per column
+    }
+    calculateMaxIcons()
+    window.addEventListener("resize", calculateMaxIcons)
+    return () => window.removeEventListener("resize", calculateMaxIcons)
   }, [])
 
   const windowConfigs = getWindowConfigs(isMobile)
@@ -194,7 +212,14 @@ export default function Desktop() {
       <MenuBar onWallpaperChange={handleWallpaperChange} currentWallpaper={wallpaper} />
 
       <div className="absolute top-12 left-6 bottom-24 pointer-events-none">
-        <div className="flex flex-col flex-wrap gap-3 h-full pointer-events-auto content-start">
+        <div
+          className="grid gap-3 h-full pointer-events-auto content-start"
+          style={{
+            gridTemplateRows: `repeat(${maxIconsPerColumn}, auto)`,
+            gridAutoFlow: "column",
+            gridAutoColumns: "auto",
+          }}
+        >
           {desktopIcons.map((icon) => (
             <DesktopIcon
               key={icon.id}

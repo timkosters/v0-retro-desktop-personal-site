@@ -1,6 +1,7 @@
 "use client"
 
 import type React from "react"
+import { useRef } from "react"
 import { motion } from "framer-motion"
 
 interface DesktopIconProps {
@@ -22,7 +23,7 @@ interface DesktopIconProps {
     | "socials"
     | "writing"
     | "edgecity"
-    | "guestbook" // Added guestbook icon type
+    | "guestbook"
 }
 
 export function DesktopIcon({
@@ -33,6 +34,33 @@ export function DesktopIcon({
   iconType = "document",
   isExternal = false,
 }: DesktopIconProps) {
+  const isDragging = useRef(false)
+  const dragStartPos = useRef({ x: 0, y: 0 })
+
+  const handleDragStart = (event: MouseEvent | TouchEvent | PointerEvent) => {
+    isDragging.current = false
+    const point = "touches" in event ? event.touches[0] : event
+    dragStartPos.current = { x: point.clientX, y: point.clientY }
+  }
+
+  const handleDrag = (event: MouseEvent | TouchEvent | PointerEvent) => {
+    const point = "touches" in event ? event.touches[0] : event
+    const deltaX = Math.abs(point.clientX - dragStartPos.current.x)
+    const deltaY = Math.abs(point.clientY - dragStartPos.current.y)
+    // Consider it a drag if moved more than 5 pixels
+    if (deltaX > 5 || deltaY > 5) {
+      isDragging.current = true
+    }
+  }
+
+  const handleClick = () => {
+    // Only trigger onClick if we didn't just finish dragging
+    if (!isDragging.current) {
+      onClick()
+    }
+    isDragging.current = false
+  }
+
   const renderIcon = () => {
     switch (iconType) {
       case "document":
@@ -233,7 +261,7 @@ export function DesktopIcon({
             </div>
           </div>
         )
-      case "guestbook": // Added guestbook icon
+      case "guestbook":
         return (
           <div className="w-12 h-14 relative">
             {/* Book cover */}
@@ -261,7 +289,9 @@ export function DesktopIcon({
       dragMomentum={false}
       dragElastic={0}
       initial={initialPosition}
-      onClick={onClick}
+      onDragStart={handleDragStart}
+      onDrag={handleDrag}
+      onClick={handleClick}
       className="flex flex-col items-center gap-1.5 p-2 cursor-grab active:cursor-grabbing select-none group"
       whileDrag={{ scale: 1.05 }}
       whileHover={{ scale: 1.02 }}
