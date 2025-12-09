@@ -21,12 +21,14 @@ const MENU_CONFIG = {
       name: "Dreamy Clouds",
       url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/timour_Clouds_slowly_move_in_the_background_while_the_window__7439470e-faa9-498a-976a-483ae1c790e6_2-qfwXUT4tYaxGtpBLFM3qcfO9Yh8uT3.mp4",
       type: "video" as const,
+      thumbnail: "/images/dreamy-clouds-thumb.jpg",
     },
     { name: "Sunset Coast", url: "https://i.imgur.com/VsXVEBT.jpeg", type: "image" as const },
     {
       name: "Flower Glitch",
       url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Flower%20Glitch%20shortened%20and%20compressed-5bLmCGOkaMIDova4kEwIAYuUEQXzZD.mp4",
       type: "video" as const,
+      thumbnail: "/images/flower-glitch-thumb.jpg",
     },
     {
       name: "Blueprint Satellite",
@@ -64,7 +66,7 @@ interface AppleParticle {
 }
 
 interface MenuBarProps {
-  onWallpaperChange?: (url: string, type: "image" | "video") => void
+  onWallpaperChange?: (url: string, type: "image" | "video", thumbnail?: string) => void
   currentWallpaper?: string
 }
 
@@ -211,7 +213,7 @@ export function MenuBar({ onWallpaperChange, currentWallpaper }: MenuBarProps) {
               {MENU_CONFIG.wallpapers.map((wp) => (
                 <DropdownMenuItem
                   key={wp.url}
-                  onClick={() => onWallpaperChange?.(wp.url, wp.type || "image")}
+                  onClick={() => onWallpaperChange?.(wp.url, wp.type || "image", wp.thumbnail)}
                   className={`text-sm text-black hover:bg-black hover:text-white rounded-none cursor-pointer pl-6 ${currentWallpaper === wp.url ? "bg-[#d0d0d0]" : ""}`}
                 >
                   {currentWallpaper === wp.url && "✓ "}

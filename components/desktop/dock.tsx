@@ -25,15 +25,11 @@ export function Dock({ onWallpaperChange, currentWallpaper }: DockProps) {
           >
             {/* Wallpaper thumbnail */}
             <div className="w-10 h-7 sm:w-12 sm:h-8 relative">
-              {wallpaper.type === "video" ? (
-                <video src={wallpaper.url} className="w-full h-full object-cover" muted playsInline />
-              ) : (
-                <img
-                  src={wallpaper.url || "/placeholder.svg"}
-                  alt={wallpaper.name}
-                  className="w-full h-full object-cover"
-                />
-              )}
+              <img
+                src={wallpaper.thumbnail || wallpaper.url || "/placeholder.svg"}
+                alt={wallpaper.name}
+                className="w-full h-full object-cover"
+              />
               {/* Selection indicator */}
               {currentWallpaper === wallpaper.url && (
                 <div className="absolute inset-0 bg-white/20 flex items-center justify-center">
