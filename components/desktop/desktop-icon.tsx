@@ -22,6 +22,7 @@ interface DesktopIconProps {
     | "socials"
     | "writing"
     | "edgecity"
+    | "guestbook" // Added guestbook icon type
 }
 
 export function DesktopIcon({
@@ -229,6 +230,23 @@ export function DesktopIcon({
                   <div className="absolute top-1 left-[1px] w-[1px] h-[1px] bg-[#ffe066]" />
                 </div>
               </div>
+            </div>
+          </div>
+        )
+      case "guestbook": // Added guestbook icon
+        return (
+          <div className="w-12 h-14 relative">
+            {/* Book cover */}
+            <div className="absolute inset-0 bg-[#8B4513] border-2 border-[#2a2a2a] rounded-r-sm">
+              {/* Spine */}
+              <div className="absolute left-0 top-0 bottom-0 w-2 bg-[#654321] border-r border-[#2a2a2a]" />
+              {/* Pages visible on edge */}
+              <div className="absolute right-0 top-1 bottom-1 w-1 bg-[#f5f5dc]" />
+              {/* Decorative lines on cover */}
+              <div className="absolute top-3 left-3 right-2 h-[2px] bg-[#d4a574]" />
+              <div className="absolute top-6 left-3 right-3 h-[2px] bg-[#d4a574]" />
+              {/* Pen icon */}
+              <div className="absolute bottom-2 right-2 w-1 h-4 bg-[#2a2a2a] rotate-[-30deg]" />
             </div>
           </div>
         )

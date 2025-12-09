@@ -10,8 +10,9 @@ import { AboutContent } from "@/components/desktop/window-contents/about-content
 import { MusicContent } from "@/components/desktop/window-contents/music-content"
 import { ContactContent } from "@/components/desktop/window-contents/contact-content"
 import { SocialsContent } from "@/components/desktop/window-contents/socials-content"
+import { GuestbookContent } from "@/components/desktop/window-contents/guestbook-content" // Import guestbook
 
-type WindowId = "about" | "music" | "contact" | "socials" | "writing" | "soundcloud" | "edgecity"
+type WindowId = "about" | "music" | "contact" | "socials" | "writing" | "soundcloud" | "edgecity" | "guestbook" // Added guestbook
 
 interface WindowState {
   id: WindowId
@@ -42,6 +43,7 @@ const desktopIcons = [
     iconType: "edgecity" as const,
     externalUrl: "https://www.edgecity.live/",
   },
+  { id: "guestbook" as WindowId, label: "Guestbook", iconType: "guestbook" as const },
 ]
 
 const getWindowConfigs = (
@@ -85,6 +87,11 @@ const getWindowConfigs = (
     defaultPosition: { x: isMobile ? 10 : 120, y: isMobile ? 100 : 100 },
     size: { width: isMobile ? 280 : 340, height: isMobile ? 260 : 280 },
   },
+  guestbook: {
+    title: "Guestbook",
+    defaultPosition: { x: isMobile ? 10 : 140, y: isMobile ? 50 : 90 },
+    size: { width: isMobile ? 300 : 360, height: isMobile ? 400 : 420 },
+  },
 })
 
 export default function Desktop() {
@@ -106,6 +113,7 @@ export default function Desktop() {
     { id: "music", isOpen: false, zIndex: 1, position: { x: 100, y: 80 } },
     { id: "contact", isOpen: false, zIndex: 1, position: { x: 120, y: 100 } },
     { id: "socials", isOpen: false, zIndex: 1, position: { x: 150, y: 100 } },
+    { id: "guestbook", isOpen: false, zIndex: 1, position: { x: 140, y: 90 } }, // Added guestbook window state
   ])
   const [maxZIndex, setMaxZIndex] = useState(1)
 
@@ -140,13 +148,15 @@ export default function Desktop() {
   const getWindowContent = (id: WindowId) => {
     switch (id) {
       case "about":
-        return <AboutContent />
+        return <AboutContent onOpenGuestbook={() => openWindow("guestbook")} /> // Pass callback to open guestbook
       case "music":
         return <MusicContent />
       case "contact":
         return <ContactContent />
       case "socials":
         return <SocialsContent />
+      case "guestbook":
+        return <GuestbookContent /> // Added guestbook content
       case "writing":
         return null
       case "soundcloud":
@@ -183,8 +193,8 @@ export default function Desktop() {
 
       <MenuBar onWallpaperChange={handleWallpaperChange} currentWallpaper={wallpaper} />
 
-      <div className="absolute top-12 left-6 right-6 lg:right-auto bottom-24 overflow-y-auto">
-        <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-1 lg:flex lg:flex-col gap-3 pb-4">
+      <div className="absolute top-12 left-6 bottom-24 pointer-events-none">
+        <div className="flex flex-col flex-wrap gap-3 h-full pointer-events-auto content-start">
           {desktopIcons.map((icon) => (
             <DesktopIcon
               key={icon.id}
