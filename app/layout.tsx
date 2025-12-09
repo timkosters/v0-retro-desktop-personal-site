@@ -7,11 +7,30 @@ import "./globals.css"
 const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
-// <CHANGE> Updated metadata for portfolio
 export const metadata: Metadata = {
-  title: "John Doe | Portfolio",
-  description: "Senior Frontend Engineer - Personal Portfolio",
+  title: "Timour's Personal Site",
+  description: "Welcome ☀️",
   generator: "v0.app",
+  openGraph: {
+    title: "Timour's Personal Site",
+    description: "Welcome ☀️",
+    type: "website",
+    siteName: "Timour's Personal Site",
+    images: [
+      {
+        url: "https://i.imgur.com/VsXVEBT.jpeg",
+        width: 1200,
+        height: 630,
+        alt: "Timour's Personal Site",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Timour's Personal Site",
+    description: "Welcome ☀️",
+    images: ["https://i.imgur.com/VsXVEBT.jpeg"],
+  },
   icons: {
     icon: [
       {
