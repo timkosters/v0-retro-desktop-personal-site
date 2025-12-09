@@ -23,7 +23,7 @@ const MENU_CONFIG = {
       type: "video" as const,
       thumbnail: "/images/dreamy-clouds-thumb.jpg",
     },
-    { name: "Sunset Coast", url: "https://i.imgur.com/VsXVEBT.jpeg", type: "image" as const },
+    { name: "Sunset Coast", url: "/images/sunset-coast.jpg", type: "image" as const },
     {
       name: "Flower Glitch",
       url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Flower%20Glitch%20shortened%20and%20compressed-5bLmCGOkaMIDova4kEwIAYuUEQXzZD.mp4",

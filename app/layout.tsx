@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     siteName: "Timour's Personal Site",
     images: [
       {
-        url: "https://i.imgur.com/VsXVEBT.jpeg",
+        url: "https://timour.xyz/images/sunset-coast.jpg",
         width: 1200,
         height: 630,
         alt: "Timour's Personal Site",
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Timour's Personal Site",
     description: "Welcome ☀️",
-    images: ["https://i.imgur.com/VsXVEBT.jpeg"],
+    images: ["https://timour.xyz/images/sunset-coast.jpg"],
   },
   icons: {
     icon: [
