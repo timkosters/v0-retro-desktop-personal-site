@@ -25,12 +25,6 @@ const MENU_CONFIG = {
     },
     { name: "Sunset Coast", url: "/images/sunset-coast.jpg", type: "image" as const },
     {
-      name: "Flower Glitch",
-      url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Flower%20Glitch%20shortened%20and%20compressed-5bLmCGOkaMIDova4kEwIAYuUEQXzZD.mp4",
-      type: "video" as const,
-      thumbnail: "/images/flower-glitch-thumb.jpg",
-    },
-    {
       name: "Blueprint Satellite",
       url: "/images/satellite-20no-20bottom-20blueprint-20paper-20light-20grain.jpg",
       type: "image" as const,
