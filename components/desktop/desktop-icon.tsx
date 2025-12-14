@@ -24,6 +24,7 @@ interface DesktopIconProps {
     | "writing"
     | "edgecity"
     | "guestbook"
+    | "talks"
 }
 
 export function DesktopIcon({
@@ -276,6 +277,25 @@ export function DesktopIcon({
               {/* Pen icon */}
               <div className="absolute bottom-2 right-2 w-1 h-4 bg-[#2a2a2a] rotate-[-30deg]" />
             </div>
+          </div>
+        )
+      case "talks":
+        return (
+          <div className="w-12 h-14 relative">
+            {/* Microphone body */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-6 h-8 bg-[#3a3a3a] border-2 border-[#2a2a2a] rounded-t-full">
+              {/* Microphone grille lines */}
+              <div className="absolute top-2 left-1 right-1 h-[1px] bg-[#5a5a5a]" />
+              <div className="absolute top-3 left-1 right-1 h-[1px] bg-[#5a5a5a]" />
+              <div className="absolute top-4 left-1 right-1 h-[1px] bg-[#5a5a5a]" />
+              <div className="absolute top-5 left-1 right-1 h-[1px] bg-[#5a5a5a]" />
+            </div>
+            {/* Microphone stand connector */}
+            <div className="absolute top-8 left-1/2 -translate-x-1/2 w-2 h-2 bg-[#4a4a4a] border border-[#2a2a2a]" />
+            {/* Microphone stand */}
+            <div className="absolute top-10 left-1/2 -translate-x-1/2 w-1 h-3 bg-[#5a5a5a]" />
+            {/* Base */}
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-1 bg-[#4a4a4a] border border-[#2a2a2a] rounded-sm" />
           </div>
         )
       default:

@@ -11,8 +11,18 @@ import { MusicContent } from "@/components/desktop/window-contents/music-content
 import { ContactContent } from "@/components/desktop/window-contents/contact-content"
 import { SocialsContent } from "@/components/desktop/window-contents/socials-content"
 import { GuestbookContent } from "@/components/desktop/window-contents/guestbook-content" // Import guestbook
+import { TalksContent } from "@/components/desktop/window-contents/talks-content" // Import TalksContent
 
-type WindowId = "about" | "music" | "contact" | "socials" | "writing" | "soundcloud" | "edgecity" | "guestbook" // Added guestbook
+type WindowId =
+  | "about"
+  | "music"
+  | "contact"
+  | "socials"
+  | "writing"
+  | "soundcloud"
+  | "edgecity"
+  | "guestbook"
+  | "talks" // Added guestbook
 
 interface WindowState {
   id: WindowId
@@ -44,6 +54,7 @@ const desktopIcons = [
     externalUrl: "https://www.edgecity.live/",
   },
   { id: "guestbook" as WindowId, label: "Guestbook", iconType: "guestbook" as const },
+  { id: "talks" as WindowId, label: "Talks & Podcasts", iconType: "talks" as const }, // Added Talks & Podcasts icon
 ]
 
 const getWindowConfigs = (
@@ -92,6 +103,11 @@ const getWindowConfigs = (
     defaultPosition: { x: isMobile ? 10 : 140, y: isMobile ? 50 : 90 },
     size: { width: isMobile ? 300 : 360, height: isMobile ? 400 : 420 },
   },
+  talks: {
+    title: "Talks & Podcasts",
+    defaultPosition: { x: isMobile ? 10 : 100, y: isMobile ? 50 : 70 },
+    size: { width: isMobile ? 300 : 420, height: isMobile ? 450 : 480 },
+  },
 })
 
 export default function Desktop() {
@@ -115,7 +131,7 @@ export default function Desktop() {
       const availableHeight = viewportHeight - menuBarHeight - dockHeight
       const iconHeight = 100 // approximate height of icon + gap
       const maxIcons = Math.floor(availableHeight / iconHeight)
-      const totalIcons = desktopIcons.length // 7 icons
+      const totalIcons = desktopIcons.length // 8 icons
       const desiredMax = Math.min(maxIcons, totalIcons - 2) // Leave at least 2 for second column
       setMaxIconsPerColumn(Math.max(3, desiredMax)) // Minimum 3 per column
     }
@@ -132,6 +148,7 @@ export default function Desktop() {
     { id: "contact", isOpen: false, zIndex: 1, position: { x: 120, y: 100 } },
     { id: "socials", isOpen: false, zIndex: 1, position: { x: 150, y: 100 } },
     { id: "guestbook", isOpen: false, zIndex: 1, position: { x: 140, y: 90 } }, // Added guestbook window state
+    { id: "talks", isOpen: false, zIndex: 1, position: { x: 100, y: 70 } }, // Added talks window state
   ])
   const [maxZIndex, setMaxZIndex] = useState(1)
 
@@ -175,6 +192,8 @@ export default function Desktop() {
         return <SocialsContent />
       case "guestbook":
         return <GuestbookContent /> // Added guestbook content
+      case "talks":
+        return <TalksContent /> // Added talks content
       case "writing":
         return null
       case "soundcloud":
