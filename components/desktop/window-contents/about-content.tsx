@@ -26,11 +26,7 @@ const ABOUT_CONFIG = {
 // Component Code (no need to edit below)
 // ============================================
 
-interface AboutContentProps {
-  onOpenGuestbook?: () => void
-}
-
-export function AboutContent({ onOpenGuestbook }: AboutContentProps) {
+export function AboutContent() {
   return (
     <div className="space-y-4 font-mono text-sm pr-6 overflow-hidden">
       {/* Profile Section */}
@@ -68,15 +64,6 @@ export function AboutContent({ onOpenGuestbook }: AboutContentProps) {
 
       {/* Dotted Separator */}
       <div className="border-t border-dotted border-[#808080] pt-4" />
-
-      {onOpenGuestbook && (
-        <button
-          onClick={onOpenGuestbook}
-          className="w-full bg-[#1a1a1a] text-[#00ff00] hover:bg-[#2a2a2a] transition-colors py-2 px-4 font-mono text-sm border-2 border-black"
-        >
-          {">"} SIGN MY GUESTBOOK
-        </button>
-      )}
 
       <div className="bg-[#1a1a1a] text-[#00ff00] p-3 font-mono text-xs space-y-1">
         <div>
