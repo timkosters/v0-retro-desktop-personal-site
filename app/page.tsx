@@ -53,8 +53,8 @@ const desktopIcons = [
     iconType: "edgecity" as const,
     externalUrl: "https://www.edgecity.live/",
   },
-  { id: "guestbook" as WindowId, label: "Guestbook", iconType: "guestbook" as const },
-  { id: "talks" as WindowId, label: "Talks & Podcasts", iconType: "talks" as const }, // Added Talks & Podcasts icon
+  // { id: "guestbook" as WindowId, label: "Guestbook", iconType: "guestbook" as const },
+  { id: "talks" as WindowId, label: "Talks & Podcasts", iconType: "talks" as const },
 ]
 
 const getWindowConfigs = (
@@ -147,7 +147,7 @@ export default function Desktop() {
     { id: "music", isOpen: false, zIndex: 1, position: { x: 100, y: 80 } },
     { id: "contact", isOpen: false, zIndex: 1, position: { x: 120, y: 100 } },
     { id: "socials", isOpen: false, zIndex: 1, position: { x: 150, y: 100 } },
-    { id: "guestbook", isOpen: false, zIndex: 1, position: { x: 140, y: 90 } }, // Added guestbook window state
+    // { id: "guestbook", isOpen: false, zIndex: 1, position: { x: 140, y: 90 } }, // Added guestbook window state
     { id: "talks", isOpen: false, zIndex: 1, position: { x: 100, y: 70 } }, // Added talks window state
   ])
   const [maxZIndex, setMaxZIndex] = useState(1)
