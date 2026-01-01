@@ -8,13 +8,14 @@ interface PortalContentProps {
 export function PortalContent({ windowPosition, windowSize }: PortalContentProps) {
   const contentHeight = windowSize.height - 40 // Account for header
 
+  // regardless of screen aspect ratio or window position. Auto height maintains aspect ratio.
   return (
     <div
       className="w-full h-full"
       style={{
         height: contentHeight,
         backgroundImage: "url('/images/bliss.jpg')",
-        backgroundSize: "auto 200vh",
+        backgroundSize: "300vmax auto",
         backgroundPosition: `calc(50% - ${windowPosition.x}px) calc(50% - ${windowPosition.y}px)`,
         backgroundRepeat: "no-repeat",
       }}
