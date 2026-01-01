@@ -6,18 +6,31 @@ import { useEffect, useState } from "react"
 
 interface WindowProps {
   title: string
-  children: ReactNode
+  children?: ReactNode
+  renderContent?: (position: { x: number; y: number }) => ReactNode
   isOpen: boolean
   onClose: () => void
   onFocus: () => void
   zIndex: number
   defaultPosition?: { x: number; y: number }
   size?: { width: number; height: number }
+  hideScrollbar?: boolean
 }
 
-export function Window({ title, children, isOpen, onClose, onFocus, zIndex, size }: WindowProps) {
+export function Window({
+  title,
+  children,
+  renderContent,
+  isOpen,
+  onClose,
+  onFocus,
+  zIndex,
+  size,
+  hideScrollbar,
+}: WindowProps) {
   const [viewportSize, setViewportSize] = useState({ width: 0, height: 0 })
   const [initialized, setInitialized] = useState(false)
+  const [currentPosition, setCurrentPosition] = useState({ x: 0, y: 0 })
 
   const x = useMotionValue(0)
   const y = useMotionValue(0)
@@ -35,16 +48,15 @@ export function Window({ title, children, isOpen, onClose, onFocus, zIndex, size
     if (isOpen && viewportSize.width > 0 && !initialized) {
       const windowWidth = size?.width || 300
       const windowHeight = size?.height || 300
-      // Center horizontally and position slightly above center vertically
       const centerX = Math.max(10, (viewportSize.width - windowWidth) / 2)
       const centerY = Math.max(50, (viewportSize.height - windowHeight) / 3)
       x.set(centerX)
       y.set(centerY)
+      setCurrentPosition({ x: centerX, y: centerY })
       setInitialized(true)
     }
   }, [isOpen, viewportSize, size, initialized, x, y])
 
-  // Reset initialized when window closes
   useEffect(() => {
     if (!isOpen) {
       setInitialized(false)
@@ -59,8 +71,12 @@ export function Window({ title, children, isOpen, onClose, onFocus, zIndex, size
     const maxX = viewportSize.width - (size?.width || 300) - 20
     const maxY = viewportSize.height - (size?.height || 300) - 100
 
-    x.set(Math.max(0, Math.min(newX, maxX)))
-    y.set(Math.max(40, Math.min(newY, maxY))) // Min Y of 40 to stay below menu bar
+    const clampedX = Math.max(0, Math.min(newX, maxX))
+    const clampedY = Math.max(40, Math.min(newY, maxY))
+
+    x.set(clampedX)
+    y.set(clampedY)
+    setCurrentPosition({ x: clampedX, y: clampedY })
   }
 
   return (
@@ -83,7 +99,7 @@ export function Window({ title, children, isOpen, onClose, onFocus, zIndex, size
       onMouseDown={onFocus}
       dragListener={false}
     >
-      {/* Window Header - Striped pattern like reference */}
+      {/* Window Header */}
       <motion.div
         className="relative flex items-center justify-between px-1 py-1 cursor-grab active:cursor-grabbing border-b-[3px] border-black"
         style={{ touchAction: "none" }}
@@ -99,7 +115,6 @@ export function Window({ title, children, isOpen, onClose, onFocus, zIndex, size
         dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }}
         onDrag={handleDrag}
       >
-        {/* Striped pattern on both sides */}
         <div
           className="flex-1 h-5 mr-2"
           style={{
@@ -141,15 +156,18 @@ export function Window({ title, children, isOpen, onClose, onFocus, zIndex, size
           minHeight: size ? size.height - 40 : 260,
           maxHeight: size ? size.height - 40 : undefined,
           fontFamily: "ui-monospace, 'SF Mono', Monaco, 'Cascadia Mono', monospace",
+          padding: hideScrollbar ? 0 : undefined,
         }}
       >
-        {children}
+        {renderContent ? renderContent(currentPosition) : children}
       </div>
 
-      {/* Scrollbar track on right side */}
-      <div className="absolute right-0 top-8 bottom-0 w-4 border-l-[3px] border-black bg-[#c8c4bc]">
-        <div className="absolute top-0 left-0 right-0 h-8 bg-[#a8a4a0] border-b-2 border-black" />
-      </div>
+      {/* Scrollbar track - hide for portal */}
+      {!hideScrollbar && (
+        <div className="absolute right-0 top-8 bottom-0 w-4 border-l-[3px] border-black bg-[#c8c4bc]">
+          <div className="absolute top-0 left-0 right-0 h-8 bg-[#a8a4a0] border-b-2 border-black" />
+        </div>
+      )}
     </motion.div>
   )
 }

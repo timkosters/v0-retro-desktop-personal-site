@@ -39,11 +39,6 @@ const MENU_CONFIG = {
       url: "/images/timour-httpss.png",
       type: "image" as const,
     },
-    {
-      name: "Bliss",
-      url: "/images/bliss.jpg",
-      type: "image" as const,
-    },
   ],
 
   githubUrl: "https://github.com/timkosters/v0-retro-desktop-personal-site",

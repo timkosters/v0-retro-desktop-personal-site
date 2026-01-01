@@ -12,6 +12,7 @@ import { ContactContent } from "@/components/desktop/window-contents/contact-con
 import { SocialsContent } from "@/components/desktop/window-contents/socials-content"
 import { GuestbookContent } from "@/components/desktop/window-contents/guestbook-content" // Import guestbook
 import { TalksContent } from "@/components/desktop/window-contents/talks-content" // Import TalksContent
+import { PortalContent } from "@/components/desktop/window-contents/portal-content" // Import PortalContent
 
 type WindowId =
   | "about"
@@ -23,13 +24,7 @@ type WindowId =
   | "edgecity"
   | "guestbook"
   | "talks" // Added guestbook
-
-interface WindowState {
-  id: WindowId
-  isOpen: boolean
-  zIndex: number
-  position: { x: number; y: number }
-}
+  | "window" // Renamed portal to window
 
 const desktopIcons = [
   { id: "about" as WindowId, label: "About Me", iconType: "document" as const },
@@ -55,7 +50,16 @@ const desktopIcons = [
   },
   // { id: "guestbook" as WindowId, label: "Guestbook", iconType: "guestbook" as const },
   { id: "talks" as WindowId, label: "Talks & Podcasts", iconType: "talks" as const },
+  // Renamed portal icon to window
+  { id: "window" as WindowId, label: "Window", iconType: "portal" as const },
 ]
+
+interface WindowState {
+  id: WindowId
+  isOpen: boolean
+  zIndex: number
+  position: { x: number; y: number }
+}
 
 const getWindowConfigs = (
   isMobile: boolean,
@@ -108,6 +112,11 @@ const getWindowConfigs = (
     defaultPosition: { x: isMobile ? 10 : 100, y: isMobile ? 50 : 70 },
     size: { width: isMobile ? 300 : 420, height: isMobile ? 450 : 480 },
   },
+  window: {
+    title: "Window",
+    defaultPosition: { x: isMobile ? 10 : 150, y: isMobile ? 50 : 100 },
+    size: { width: isMobile ? 280 : 350, height: isMobile ? 300 : 350 },
+  },
 })
 
 export default function Desktop() {
@@ -149,6 +158,8 @@ export default function Desktop() {
     { id: "socials", isOpen: false, zIndex: 1, position: { x: 150, y: 100 } },
     // { id: "guestbook", isOpen: false, zIndex: 1, position: { x: 140, y: 90 } }, // Added guestbook window state
     { id: "talks", isOpen: false, zIndex: 1, position: { x: 100, y: 70 } }, // Added talks window state
+    // Renamed portal window state to window
+    { id: "window", isOpen: false, zIndex: 1, position: { x: 150, y: 100 } },
   ])
   const [maxZIndex, setMaxZIndex] = useState(1)
 
@@ -194,6 +205,8 @@ export default function Desktop() {
         return <GuestbookContent /> // Added guestbook content
       case "talks":
         return <TalksContent /> // Added talks content
+      case "window":
+        return null // Window returns null - uses renderContent instead
       case "writing":
         return null
       case "soundcloud":
@@ -264,6 +277,17 @@ export default function Desktop() {
             defaultPosition={windowConfigs[window.id].defaultPosition}
             position={window.position}
             size={windowConfigs[window.id].size}
+            hideScrollbar={window.id === "window"}
+            renderContent={
+              window.id === "window"
+                ? (position) => (
+                    <PortalContent
+                      windowPosition={position}
+                      windowSize={windowConfigs[window.id].size || { width: 350, height: 350 }}
+                    />
+                  )
+                : undefined
+            }
           >
             {getWindowContent(window.id)}
           </Window>
