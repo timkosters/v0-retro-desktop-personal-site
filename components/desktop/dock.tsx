@@ -16,8 +16,9 @@ export function Dock({ onWallpaperChange, currentWallpaper }: DockProps) {
           <motion.button
             key={wallpaper.url}
             onClick={() => onWallpaperChange(wallpaper.url, wallpaper.type || "image")}
-            className={`relative rounded-md overflow-hidden border-2 transition-colors ${currentWallpaper === wallpaper.url ? "border-white" : "border-[#3a3a3a] hover:border-[#5a5a5a]"
-              }`}
+            className={`relative rounded-md overflow-hidden border-2 transition-colors ${
+              currentWallpaper === wallpaper.url ? "border-white" : "border-[#3a3a3a] hover:border-[#5a5a5a]"
+            }`}
             title={wallpaper.name}
             whileHover={{ scale: 1.3, y: -8 }}
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
@@ -25,7 +26,7 @@ export function Dock({ onWallpaperChange, currentWallpaper }: DockProps) {
             {/* Wallpaper thumbnail */}
             <div className="w-10 h-7 sm:w-12 sm:h-8 relative">
               <img
-                src={wallpaper.thumbnail || (wallpaper.type === "video" ? "/placeholder.svg" : wallpaper.url)}
+                src={wallpaper.thumbnail || wallpaper.url || "/placeholder.svg"}
                 alt={wallpaper.name}
                 className="w-full h-full object-cover"
               />

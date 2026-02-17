@@ -23,7 +23,6 @@ const MENU_CONFIG = {
       type: "video" as const,
       thumbnail: "/images/dreamy-clouds-thumb.jpg",
     },
-    { name: "Sunset Coast", url: "/images/sunset-coast.jpg", type: "image" as const },
     {
       name: "Blueprint Satellite",
       url: "/images/satellite-20no-20bottom-20blueprint-20paper-20light-20grain.jpg",
@@ -70,10 +69,7 @@ export function MenuBar({ onWallpaperChange, currentWallpaper }: MenuBarProps) {
   const [viewOpen, setViewOpen] = useState(false)
   const [apples, setApples] = useState<AppleParticle[]>([])
 
-  const [mounted, setMounted] = useState(false)
-
   useEffect(() => {
-    setMounted(true)
     const updateTime = () => {
       setCurrentTime(
         new Date().toLocaleTimeString("en-US", {
@@ -140,7 +136,7 @@ export function MenuBar({ onWallpaperChange, currentWallpaper }: MenuBarProps) {
 
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 h-6 bg-[#f5f5f5] border-b border-black flex items-center justify-between px-2 z-[999]">
+      <div className="fixed top-0 left-0 right-0 h-6 bg-[#f5f5f5] border-b border-black flex items-center justify-between px-2 z-[100]">
         <div className="flex items-center gap-1">
           {/* Apple logo */}
           <button
@@ -223,7 +219,7 @@ export function MenuBar({ onWallpaperChange, currentWallpaper }: MenuBarProps) {
 
         {/* Right side - Clock */}
         <span className="text-black text-sm font-medium" style={chicagoFont}>
-          {mounted ? currentTime : "--:-- --"}
+          {currentTime}
         </span>
       </div>
 
