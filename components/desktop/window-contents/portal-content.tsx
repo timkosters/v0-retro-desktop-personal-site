@@ -1,42 +1,24 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+interface PortalContentProps {
+  windowPosition: { x: number; y: number }
+  windowSize: { width: number; height: number }
+}
 
-export function PortalContent() {
-  const bgRef = useRef<HTMLDivElement>(null)
+export function PortalContent({ windowPosition, windowSize }: PortalContentProps) {
+  const contentHeight = windowSize.height - 40 // Account for header
 
-  useEffect(() => {
-    const el = bgRef.current
-    if (!el) return
-
-    let rafId: number
-
-    const updatePosition = () => {
-      const wrapper = el.closest("[data-window-portal]")
-      if (!wrapper) return
-
-      const rect = wrapper.getBoundingClientRect()
-      el.style.backgroundPosition = `-${rect.left}px -${rect.top}px`
-      rafId = requestAnimationFrame(updatePosition)
-    }
-
-    rafId = requestAnimationFrame(updatePosition)
-    return () => cancelAnimationFrame(rafId)
-  }, [])
-
+  // regardless of screen aspect ratio or window position. Auto height maintains aspect ratio.
   return (
-    <div className="w-full h-full relative overflow-hidden">
-      <div
-        ref={bgRef}
-        className="absolute inset-0"
-        style={{
-          backgroundImage: `url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/bliss%20600dpi-tpNlRFU07O2wV1TPh8HVMZuuxG3tQk.jpg')`,
-          backgroundSize: `max(100vw, 177vh) max(56vw, 100vh)`,
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "0px 0px",
-          willChange: "background-position",
-        }}
-      />
-    </div>
+    <div
+      className="w-full h-full"
+      style={{
+        height: contentHeight,
+        backgroundImage: "url('/images/bliss.jpg')",
+        backgroundSize: "300vmax auto",
+        backgroundPosition: `calc(50% - ${windowPosition.x}px) calc(50% - ${windowPosition.y}px)`,
+        backgroundRepeat: "no-repeat",
+      }}
+    />
   )
 }

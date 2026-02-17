@@ -161,32 +161,27 @@ export default function Desktop() {
     // Renamed portal window state to window
     { id: "window", isOpen: false, zIndex: 1, position: { x: 150, y: 100 } },
   ])
-  const openWindow = useCallback((id: WindowId) => {
-    setWindows((prev) => {
-      const highestZ = Math.max(...prev.map((w) => w.zIndex), 0)
-      return prev.map((w) => (w.id === id ? { ...w, isOpen: true, zIndex: highestZ + 1 } : w))
-    })
-  }, [])
+  const [maxZIndex, setMaxZIndex] = useState(1)
+
+  const openWindow = useCallback(
+    (id: WindowId) => {
+      setMaxZIndex((prev) => prev + 1)
+      setWindows((prev) => prev.map((w) => (w.id === id ? { ...w, isOpen: true, zIndex: maxZIndex + 1 } : w)))
+    },
+    [maxZIndex],
+  )
 
   const closeWindow = useCallback((id: WindowId) => {
     setWindows((prev) => prev.map((w) => (w.id === id ? { ...w, isOpen: false } : w)))
   }, [])
 
-  const focusWindow = useCallback((id: WindowId) => {
-    setWindows((prev) => {
-      const highestZ = Math.max(...prev.map((w) => w.zIndex), 0)
-      const targetWindow = prev.find((w) => w.id === id)
-      if (targetWindow && targetWindow.zIndex === highestZ && highestZ > 0) return prev
-
-      const newHighest = highestZ + 1
-      // Safety reset if z-index gets too high
-      if (newHighest > 500) {
-        return prev.map((w) => (w.id === id ? { ...w, zIndex: 10 } : { ...w, zIndex: 1 }))
-      }
-
-      return prev.map((w) => (w.id === id ? { ...w, zIndex: newHighest } : w))
-    })
-  }, [])
+  const focusWindow = useCallback(
+    (id: WindowId) => {
+      setMaxZIndex((prev) => prev + 1)
+      setWindows((prev) => prev.map((w) => (w.id === id ? { ...w, zIndex: maxZIndex + 1 } : w)))
+    },
+    [maxZIndex],
+  )
 
   const handleIconClick = (icon: (typeof desktopIcons)[0]) => {
     if ("externalUrl" in icon && icon.externalUrl) {
@@ -199,7 +194,7 @@ export default function Desktop() {
   const getWindowContent = (id: WindowId) => {
     switch (id) {
       case "about":
-        return <AboutContent />
+        return <AboutContent onOpenGuestbook={() => openWindow("guestbook")} /> // Pass callback to open guestbook
       case "music":
         return <MusicContent />
       case "contact":
@@ -285,7 +280,12 @@ export default function Desktop() {
             hideScrollbar={window.id === "window"}
             renderContent={
               window.id === "window"
-                ? () => <PortalContent />
+                ? (position) => (
+                    <PortalContent
+                      windowPosition={position}
+                      windowSize={windowConfigs[window.id].size || { width: 350, height: 350 }}
+                    />
+                  )
                 : undefined
             }
           >
