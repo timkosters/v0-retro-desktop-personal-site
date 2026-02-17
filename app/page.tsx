@@ -285,14 +285,7 @@ export default function Desktop() {
             hideScrollbar={window.id === "window"}
             renderContent={
               window.id === "window"
-                ? (position) => (
-                  <PortalContent
-                    windowPosition={position}
-                    windowSize={windowConfigs[window.id].size || { width: 350, height: 350 }}
-                    wallpaper={wallpaper}
-                    wallpaperType={wallpaperType}
-                  />
-                )
+                ? () => <PortalContent />
                 : undefined
             }
           >
