@@ -152,6 +152,7 @@ export function Window({
       {/* Window Content */}
       <div
         className="p-4 text-black text-sm overflow-auto"
+        data-window-portal={hideScrollbar ? "true" : undefined}
         style={{
           minHeight: size ? size.height - 40 : 260,
           maxHeight: size ? size.height - 40 : undefined,
