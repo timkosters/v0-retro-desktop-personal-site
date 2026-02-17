@@ -46,7 +46,7 @@ export const defaultContent: SiteContent = {
     twitter: "@johndoe",
   },
   music: {
-    spotifyPlaylistId: "4KabAp1BKBbuz0D9ygdwfp", // Updated default Spotify playlist to user's playlist
+    spotifyPlaylistId: "7zBJDKzhgWwHUoryN7Z4Vq",
   },
 }
 
