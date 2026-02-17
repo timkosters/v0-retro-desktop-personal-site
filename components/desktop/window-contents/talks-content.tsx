@@ -6,6 +6,13 @@
 
 const TALKS_CONFIG = [
   {
+    title: "Timour on Endgame Podcast with Amanda Cassatt",
+    links: [
+      { platform: "YouTube", url: "https://www.youtube.com/watch?v=QgyiZ4aJCKI&t=1s" },
+      { platform: "Spotify", url: "https://open.spotify.com/episode/6OHZtD8qb34agsKUBuB2RG?si=6cd18e741cdc4a92" },
+    ],
+  },
+  {
     title: "Talk at the Network State Conference 2025",
     links: [
       { platform: "X (Twitter)", url: "https://x.com/JoinEdgeCity/status/1975241403463557595?s=20" },
