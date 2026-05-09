@@ -185,7 +185,11 @@ export default function Desktop() {
 
   const handleIconClick = (icon: (typeof desktopIcons)[0]) => {
     if ("externalUrl" in icon && icon.externalUrl) {
-      window.open(icon.externalUrl, "_blank")
+      const link = document.createElement("a")
+      link.href = icon.externalUrl
+      link.target = "_blank"
+      link.rel = "noopener noreferrer"
+      link.click()
     } else {
       openWindow(icon.id as WindowId)
     }
